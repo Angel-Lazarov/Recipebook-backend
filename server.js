@@ -91,6 +91,8 @@ POST /api/auth/login
 POST /api/auth/register
 */
 
+
+/*  Необходимо за стартиране на локален HTTPS СЪРВЪР
 // Път до файловете на сертификата
 const sslOptions = {
     key: fs.readFileSync(path.join('certs', 'server.key')),
@@ -100,4 +102,11 @@ const sslOptions = {
 // Стартиране на HTTPS сървър
 https.createServer(sslOptions, app).listen(config.server.port, () => {
     console.log(`HTTPS server is running on https://localhost:${config.server.port}`);
+});
+*/
+
+
+// (Render friendly) Render задава PORT в environment variable
+app.listen(config.server.port, () => {
+    console.log(`Server is running on port ${config.server.port}`);
 });
