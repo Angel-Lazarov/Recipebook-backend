@@ -23,8 +23,7 @@ import { csrfProtection } from "./middleware/csrfProtection.js";
 // create express application
 const app = express();
 
-// Преди app.use(cors()) и преди routes
-app.use(helmet());
+
 
 //-----
 // CORS: разрешаваме credentials и само твоя фронтенд
@@ -33,6 +32,9 @@ app.use(cors({
     credentials: true, // важно за cookie
 }));
 //-----
+
+// Преди app.use(cors()) и преди routes
+app.use(helmet());
 
 //-------тест----
 console.log("🌐 FRONTEND_URL (config):", config.server.frontendUrl);
