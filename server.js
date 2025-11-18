@@ -23,7 +23,8 @@ import { csrfProtection } from "./middleware/csrfProtection.js";
 // create express application
 const app = express();
 
-
+// Зад прокси (Render, Heroku и др.)
+app.set("trust proxy", 1); // <- добави това тук
 
 //-----
 // CORS: разрешаваме credentials и само твоя фронтенд
