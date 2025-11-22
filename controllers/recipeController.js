@@ -16,7 +16,7 @@ export async function createRecipe(req, res) {
     }
 
     const userId = req.user.userId;
-    const default_img = "https://placehold.co/300x200/cccccc/ffffff?text=Без+снимка";
+    // const default_img = "https://placehold.co/300x200/cccccc/ffffff?text=Без+снимка";
 
     const ingredientsArr = ingredients
       .split(",")
@@ -35,7 +35,8 @@ export async function createRecipe(req, res) {
       : categorySnapshot.docs[0].data().category;
 
     // Снимки
-    let images = [default_img];
+    // let images = [default_img];
+    let images = [];
     if (req.files && req.files.length > 0) {
       const filesToUpload = req.files.slice(0, MAX_IMAGES_PER_RECIPE);
       images = await Promise.all(filesToUpload.map(file => uploadFile(file)));
@@ -51,7 +52,7 @@ export async function createRecipe(req, res) {
       ingredients: ingredientsArr,
       instructions,
       authorId: userId,
-      images,
+      images, // ако няма качени снимки, масивът остава празен
       createdAt: Timestamp.now(),
       updatedAt: Timestamp.now(),
     };
