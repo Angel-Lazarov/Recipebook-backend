@@ -1,29 +1,36 @@
 // utils/sendEmail.js
-import nodemailer from "nodemailer";
+// да махна nodemailer!!!
 import { config } from "../config/config.js";
 
 export async function sendEmail(to, subject, html) {
-
-    console.log("🔹 Brevo user:", config.brevo.user);
     console.log("🔹 Brevo sender:", config.brevo.sender);
-    console.log("🔹 Brevo pass length:", config.brevo.pass?.length);
+    console.log("🔹 Brevo API key length:", config.brevo.apiKey?.length);
 
-    const transporter = nodemailer.createTransport({
-        host: "smtp-relay.brevo.com", // това е SMTP хостът на Brevo
-        port: 587,
-        secure: false, // важно за порт 587
-        auth: {
-            user: config.brevo.user,
-            pass: config.brevo.pass
+    const body = {
+        sender: { name: "RecipeBook", email: config.brevo.sender },
+        to: [{ email: to }],
+        subject: subject,
+        htmlContent: html
+    };
+
+    try {
+        const res = await fetch("https://api.brevo.com/v3/smtp/email", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "api-key": config.brevo.apiKey
+            },
+            body: JSON.stringify(body)
+        });
+
+        if (!res.ok) {
+            const errText = await res.text();
+            throw new Error(`Brevo API error: ${res.status} ${errText}`);
         }
-    });
 
-    await transporter.sendMail({
-        from: `"RecipeBook" <${config.brevo.sender}>`, // от кого се изпраща
-        to,                                           // до кого
-        subject,                                      // тема
-        html                                           // HTML съдържание
-    });
-
-    console.log(`✅ Email изпратен успешно до: ${to}`);
+        console.log(`✅ Email изпратен успешно до: ${to}`);
+    } catch (err) {
+        console.error("Send email error:", err);
+        throw err; // важно да хвърлим грешката, за да се улови в контролера
+    }
 }

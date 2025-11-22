@@ -33,5 +33,6 @@ export const config = {
         user: requireEnv("BREVO_USER"),
         pass: requireEnv("BREVO_SMTP_PASS"),
         sender: requireEnv("BREVO_SENDER"),
+        apiKey: requireEnv("BREVO_API_KEY"),
     },
 };
