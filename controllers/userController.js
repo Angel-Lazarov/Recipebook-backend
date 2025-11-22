@@ -5,6 +5,7 @@ import db from "../db/firestore.js";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
 import { sendEmail } from "../utils/sendEmail.js";
+import { config } from "../config/config.js";
 
 // GET /users - само за админ
 export async function getAllUsers(req, res) {
@@ -215,7 +216,7 @@ export async function forgotPassword(req, res) {
     });
 
     // Създаваме линка
-    const resetLink = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
+    const resetLink = `${config.server.frontendUrl}/reset-password/${resetToken}`;
 
     // Пращаме имейл
     await sendEmail(
