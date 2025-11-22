@@ -25,13 +25,13 @@ router.patch("/me", verifyToken, updateCurrentUser);
 // POST /users/change-password
 router.post("/change-password", verifyToken, changePassword);
 
-// GET /users/:id
-router.get("/:id", getUserById);
-
 //POST /users/forgot-password
 router.post("/forgot-password", forgotPassword);
 
 //POST /users/reset-password/:token
 router.post("/reset-password/:token", resetPassword);
+
+// GET /users/:id
+router.get("/:id", getUserById);
 
 export default router;
