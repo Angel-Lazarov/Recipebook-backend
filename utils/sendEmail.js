@@ -1,5 +1,6 @@
 // utils/sendEmail.js
 import nodemailer from "nodemailer";
+import { config } from "../config/config.js";
 
 export async function sendEmail(to, subject, html) {
     const transporter = nodemailer.createTransport({
@@ -7,13 +8,13 @@ export async function sendEmail(to, subject, html) {
         port: 587,
         secure: false, // важно за порт 587
         auth: {
-            user: process.env.BREVO_USER,   // твоят имейл (от .env)
-            pass: process.env.BREVO_SMTP_PASS
+            user: config.brevo.user,
+            pass: config.brevo.pass
         }
     });
 
     await transporter.sendMail({
-        from: `"RecipeBook" <${process.env.BREVO_SENDER}>`, // от кого се изпраща
+        from: `"RecipeBook" <${config.brevo.sender}>`, // от кого се изпраща
         to,                                           // до кого
         subject,                                      // тема
         html                                           // HTML съдържание

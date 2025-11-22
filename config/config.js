@@ -29,4 +29,9 @@ export const config = {
         accountId: requireEnv("R2_ACCOUNT_ID"),
         bucketName: requireEnv("R2_BUCKET_NAME"),
     },
+    brevo: {
+        user: requireEnv("BREVO_USER"),
+        pass: requireEnv("BREVO_SMTP_PASS"),
+        sender: requireEnv("BREVO_SENDER"),
+    },
 };
